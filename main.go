@@ -1,22 +1,25 @@
-// +build go1.16
-//go:build go1.16
-// +build go1.16
-
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+	"golang/start/go/config"
+	"golang/start/go/routes"
+	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
-	r := gin.Default()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Hello, world!",
-		})
-	})
+	graphqlURL := os.Getenv("HASURA_GRAPHQL_URL")
+	services.InitGraphQLClient(graphqlURL)
 
-	r.Run(":2002")
+	r := routes.InitRoutes() // Initialize routes
+
+	log.Println("Server is running on port 2003...")
+	log.Fatal(http.ListenAndServe(":2003", r))
 }

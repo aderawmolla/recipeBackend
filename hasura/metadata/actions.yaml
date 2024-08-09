@@ -1,6 +1,18 @@
-actions: []
+actions:
+  - name: login
+    definition:
+      kind: synchronous
+      handler: http://localhost:2002/login
+  - name: signup
+    definition:
+      kind: synchronous
+      handler: http://localhost:2002/signup
 custom_types:
-    enums: []
-    input_objects: []
-    objects: []
-    scalars: []
+  enums: []
+  input_objects:
+    - name: loginInput
+    - name: SignupInput
+  objects:
+    - name: loginOutput
+    - name: SignupOutput
+  scalars: []

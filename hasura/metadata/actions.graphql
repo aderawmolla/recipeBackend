@@ -1,0 +1,30 @@
+type Mutation {
+  login(
+    credential: loginInput!
+  ): loginOutput
+}
+
+type Mutation {
+  signup(
+    credentials: SignupInput!
+  ): SignupOutput
+}
+
+input loginInput {
+  username: String!
+  password: String!
+}
+
+input SignupInput {
+  username: String!
+  password: String!
+}
+
+type loginOutput {
+  accessToken: String!
+}
+
+type SignupOutput {
+  message: Boolean!
+}
+
