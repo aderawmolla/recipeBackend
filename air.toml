@@ -1,0 +1,11 @@
+[build]
+  cmd = "go build -o start"         # Command to build your application
+  bin = "myapp"                     # Name of the binary to run
+  include_dir = ["go","hasura"]            # Directories to include for watching
+  exclude_dir = ["assets"] # Directories to exclude from watching
+  include_ext = ["go"]             # File extensions to watch
+  exclude_ext = []                  # File extensions to exclude
+
+[log]
+  time = true                       # Show time in logs
+  time_format = "15:04:05"          # Time format for logs

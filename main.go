@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/joho/godotenv"
 	"golang/start/go/config"
 	"golang/start/go/routes"
@@ -16,6 +17,7 @@ func main() {
 	}
 
 	graphqlURL := os.Getenv("HASURA_GRAPHQL_URL")
+	fmt.Println(graphqlURL)
 	services.InitGraphQLClient(graphqlURL)
 
 	r := routes.InitRoutes() // Initialize routes

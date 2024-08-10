@@ -11,8 +11,7 @@ func InitRoutes() *mux.Router {
 	// Public routes
 	r.HandleFunc("/signup", controllers.SignupHandler).Methods("POST")
 	r.HandleFunc("/login", controllers.LoginHandler).Methods("POST")
-
-	// You can add protected routes here, using middleware to protect them
+	r.HandleFunc("/upload", controllers.UploadHandler).Methods("POST")
 
 	return r
 }

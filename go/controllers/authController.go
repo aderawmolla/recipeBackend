@@ -8,7 +8,9 @@ import (
 	"github.com/machinebox/graphql"
 	"golang.org/x/crypto/bcrypt"
 	"golang/start/go/config"
+	"golang/start/queries"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -37,13 +39,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	query := `
-        query ($username: String!) {
-            users(where: {username: {_eq: $username}}) {
-                id
-            }
-        }
-    `
+	query := queries.Users
 	req := graphql.NewRequest(query)
 	req.Var("username", reqBody.Username)
 
@@ -70,15 +66,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	mutation := `
-        mutation ($username: String!, $password: String!) {
-            insert_users(objects: {username: $username, password: $password}) {
-                returning {
-                    id
-                }
-            }
-        }
-    `
+	mutation := queries.SignupMutation
 	req = graphql.NewRequest(mutation)
 	req.Var("username", reqBody.Username)
 	req.Var("password", hashedPassword)
@@ -112,14 +100,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	query := `
-        query ($username: String!) {
-            users(where: {username: {_eq: $username}}) {
-                id
-                password
-            }
-        }
-    `
+	query := queries.Users
 	req := graphql.NewRequest(query)
 	req.Var("username", reqBody.Username)
 
@@ -147,7 +128,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		"exp": time.Now().Add(time.Hour * 72).Unix(),
 	})
 
-	tokenString, err := token.SignedString([]byte("your-secret-key"))
+	tokenString, err := token.SignedString([]byte(os.Getenv("HASURA_GRAPHQL_JWT_SECRET")))
 	if err != nil {
 		http.Error(w, "Failed to generate token", http.StatusInternalServerError)
 		return
@@ -156,4 +137,21 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Authorization", "Bearer "+tokenString)
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, "Login successful")
+
+	// I can use cookie
+	// http.SetCookie(w, &http.Cookie{
+	// 	Name:     "jwt_token",
+	// 	Value:    tokenString,
+	// 	Expires:  time.Now().Add(72 * time.Hour),
+	// 	HttpOnly: true, // Prevents JavaScript access (XSS protection)
+	// 	Secure:   true,  // Ensures the cookie is sent over HTTPS only
+	// 	Path: "/", // Path where the cookie is valid
+	// })
+
+	// w.Header().Set("Content-Type", "application/json")
+	// response := map[string]string{
+	// 	"message": "Login successful",
+	// }
+	// json.NewEncoder(w).Encode(response)
+
 }

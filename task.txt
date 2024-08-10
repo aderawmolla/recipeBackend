@@ -1,0 +1,3 @@
+secure endpoints
+upload images
+using postgress functions,computed and other services
