@@ -33,6 +33,13 @@ array_relationships:
         table:
           name: ingredients
           schema: public
+  - name: instructions
+    using:
+      foreign_key_constraint_on:
+        column: recipeId
+        table:
+          name: instruction
+          schema: public
   - name: likes
     using:
       foreign_key_constraint_on:
@@ -61,6 +68,12 @@ array_relationships:
         table:
           name: steps
           schema: public
+computed_fields:
+  - name: avg_rating
+    definition:
+      function:
+        name: calculate_average_rating
+        schema: public
 insert_permissions:
   - role: user
     permission:

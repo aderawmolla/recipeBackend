@@ -1,0 +1,12 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- CREATE OR REPLACE FUNCTION calculate_average_rating(recipe_id uuid)
+-- RETURNS numeric AS $$
+-- BEGIN
+--     RETURN (
+--         SELECT AVG(r.rating)
+--         FROM ratings r
+--         WHERE r.recipe_id = recipe_id
+--     );
+-- END;
+-- $$ LANGUAGE plpgsql;

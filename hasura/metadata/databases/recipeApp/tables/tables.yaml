@@ -2,6 +2,7 @@
 - "!include public_categories.yaml"
 - "!include public_comments.yaml"
 - "!include public_ingredients.yaml"
+- "!include public_instruction.yaml"
 - "!include public_likes.yaml"
 - "!include public_ratings.yaml"
 - "!include public_recipe_images.yaml"
