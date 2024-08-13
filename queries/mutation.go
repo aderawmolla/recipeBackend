@@ -2,7 +2,6 @@ package queries
 
 const (
 	SignupMutation = `
-
         mutation SignUp ($username: String!, $password: String!) {
             insert_users(objects: {username: $username, password: $password}) {
                 returning {

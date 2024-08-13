@@ -1,1 +1,5 @@
-hasura console --admin-secret OlfYeenaXko46zqI89K7N1rK43
+hasura console --admin-secret AderawlfYeenaXko46zqI89K7N1rK43
+docker-compose up --build
+
+checking weather the env applied or not in docker
+ docker inspect backend-graphql-engine-1 | grep ACTION_BASE_URL

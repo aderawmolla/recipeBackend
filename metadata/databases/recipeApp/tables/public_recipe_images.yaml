@@ -1,0 +1,15 @@
+table:
+  name: recipe_images
+  schema: public
+object_relationships:
+  - name: recipe
+    using:
+      foreign_key_constraint_on: recipe_id
+array_relationships:
+  - name: recipes
+    using:
+      foreign_key_constraint_on:
+        column: featured_image_id
+        table:
+          name: recipes
+          schema: public

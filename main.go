@@ -15,13 +15,16 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-
 	graphqlURL := os.Getenv("HASURA_GRAPHQL_URL")
 	fmt.Println(graphqlURL)
 	services.InitGraphQLClient(graphqlURL)
 
-	r := routes.InitRoutes() // Initialize routes
+	r := routes.InitRoutes()
 
-	log.Println("Server is running on port 2003...")
-	log.Fatal(http.ListenAndServe(":2003", r))
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Welcome to the API"))
+	}).Methods("GET")
+	log.Println("Server is running on port 2002...")
+	log.Fatal(http.ListenAndServe(":2004", r))
 }

@@ -8,7 +8,7 @@ actions:
   - name: signup
     definition:
       kind: synchronous
-      handler: http://localhost:2002/signup
+      handler: http://golang_app:2002/signup
     permissions:
       - role: user
 custom_types:
